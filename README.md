@@ -1,9 +1,16 @@
-## Aula 1 - Conhecendo os requisitos da aplicação
-- yarn add uuid
-## Aula 2 - Validando CPF existente
-- Regra de negócios da aplicação - não é possível criar uma conta com o mesmo CPF
-## Aula 3 - Listando extrato
-## Aula 4 - Validando a conta
+##  - Conhecendo os requisitos da aplicação
+    - yarn add uuid
+##  - Cadastro de conta
+##  - Validando CPF existente
+    - Regra de negócios da aplicação - não é possível criar uma conta com o mesmo CPF
+##  - Listando extrato
+##  - Validando a conta
+##  - Middlewares
+##  - Criando depósito na conta
+##  - Criando saque na conta
+##  - Listar extrato bancário por data
+##  - Atualizar conta
+##  - Remover conta
 
 **FinApi - Financeira**
 
