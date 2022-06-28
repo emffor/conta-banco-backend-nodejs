@@ -1,6 +1,9 @@
 ## Aula 1 - Conhecendo os requisitos da aplicação
 - yarn add uuid
 
+## Aula 2 - Validando CPF existente
+- Regra de negócios da aplicação - não é possível criar uma conta com o mesmo CPF
+
 **FinApi - Financeira**
 
 *Requisitos*

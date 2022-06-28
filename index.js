@@ -19,13 +19,20 @@ const customers = [];
 app.post('/account', (request, response) => {
    const { cpf, name } = request.body;
 
-   const id = uuidv4();
+   //fazer uma buscar with .some() para verificar se o cpf já existe.
+   const customerAlreadyExists = customers.some(
+      (customer) => customer.cpf === cpf
+   );
+
+   if (customerAlreadyExists) {
+      return response.status(400).json({ error: 'Customer Already Exists!' });
+   }
 
    //inserir dados dentro do array customers - banco de dados fake
    customers.push({
       cpf,
       name,
-      id,
+      id: uuidv4(),
       statement: [],
    });
 
