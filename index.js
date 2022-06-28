@@ -1,4 +1,4 @@
-const { response } = require('express');
+const { response, application } = require('express');
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 
@@ -163,6 +163,32 @@ app.get('/account', verifyIfExistsAccountCPF, (request, response) => {
   const { customer } = request;
 
   return response.json(customer);
+});
+
+//método para deletar a conta
+app.delete('/account', verifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request;
+
+  /* 
+    splice() - remove um elemento do array
+
+    parâmetro 1 (customer) - iniciar no próprio customer
+    parâmetro 2 (1) - espera que remova uma posição a partir do customer
+  */
+  customers.splice(customer, 1);
+
+  //retornando o status 200 e envia no json os customers que restaram
+  return response.status(200).json(customers);
+});
+
+//método para o balance
+app.get('/balance', verifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request;
+
+  const balance = getBalance(customer.statement);
+
+  //retornar o balance
+  return response.json({ balance });
 });
 
 //localhost:3333/
