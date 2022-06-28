@@ -8,6 +8,21 @@ app.use(express.json());
 //banco de dados fake
 const customers = [];
 
+//Middleware para verificar se o cliente existe / Middleware precisa de 3 parâmetros
+function verifyIfExistsAccountCPF(request, response, next) {
+   /* const { cpf } = request.params; */
+   const { cpf } = request.headers;
+
+   const customer = customers.find((customer) => customer.cpf === cpf);
+
+   // !customer - se não existir o cliente
+   if (!customer) {
+      return response.status(400).json({ error: 'Customer Not Found!' });
+   }
+
+   return next();
+}
+
 /*
  * cpf = string
  * nome = string
@@ -41,17 +56,7 @@ app.post('/account', (request, response) => {
 
 //Buscar o extrato bancário do cliente - como precisa buscar a informação completa(todos os dados) precisa usar o find() - O some() é quando precisa retornar existe e não existe.
 
-app.get('/statement/', (request, response) => {
-   /* const { cpf } = request.params; */
-   const { cpf } = request.headers;
-
-   const customer = customers.find((customer) => customer.cpf === cpf);
-
-   // !customer - se não existir o cliente
-   if (!customer) {
-      return response.status(400).json({ error: 'Customer Not Found!' });
-   }
-
+app.get('/statement/', verifyIfExistsAccountCPF, (request, response) => {
    return response.json(customer.statement);
 });
 
