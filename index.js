@@ -39,6 +39,16 @@ app.post('/account', (request, response) => {
    return response.status(201).send();
 });
 
+//Buscar o extrato bancário do cliente - como precisa buscar a informação completa(todos os dados) precisa usar o find() - O some() é quando precisa retornar existe e não existe.
+
+app.get('/statement/:cpf', (request, response) => {
+   const { cpf } = request.params;
+
+   const customer = customers.find((customer) => customer.cpf === cpf);
+
+   return response.json(customer.statement);
+});
+
 app.get('/', (request, response) => {
    return response.json({ message: 'Hello, world, Dev!' });
 });
