@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 
@@ -146,6 +147,22 @@ app.get('/statement/date', verifyIfExistsAccountCPF, (request, response) => {
   );
 
   return response.json(statement);
+});
+
+app.put('/account', verifyIfExistsAccountCPF, (request, response) => {
+  const { name } = request.body; //pegando o nome que foi passado na query
+  const { customer } = request; //verificando se o cliente existe
+
+  customer.name = name;
+
+  return response.status(201).send();
+});
+
+//método exibir dados da conta
+app.get('/account', verifyIfExistsAccountCPF, (request, response) => {
+  const { customer } = request;
+
+  return response.json(customer);
 });
 
 //localhost:3333/
