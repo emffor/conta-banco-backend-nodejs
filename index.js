@@ -62,15 +62,28 @@ app.post('/account', (request, response) => {
 //usar dessa forma quando eu quiser que todas as minhas rotas tenha acesso ao middleware
 //app.use(verifyIfExistsAccountCPF);
 
-app.get('/statement/', verifyIfExistsAccountCPF, (request, response) => {
+app.get('/statement', verifyIfExistsAccountCPF, (request, response) => {
    //recuperando informações do cliente - request.customers desse middleware
    const { customer } = request;
 
    return response.json(customer.statement);
 });
 
-app.get('/', (request, response) => {
-   return response.json({ message: 'Hello, world, Dev!' });
+app.post('/deposit', verifyIfExistsAccountCPF, (request, response) => {
+   const { description, amount } = request.body;
+
+   const { customer } = request;
+
+   const statementOperation = {
+      description,
+      amount,
+      created_at: new Date(),
+      type: 'credit',
+   };
+
+   customer.statement.push(statementOperation);
+
+   return response.status(201).send();
 });
 
 //localhost:3333/
