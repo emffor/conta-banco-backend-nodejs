@@ -20,6 +20,9 @@ function verifyIfExistsAccountCPF(request, response, next) {
       return response.status(400).json({ error: 'Customer Not Found!' });
    }
 
+   //passando as informações do middleware para a próxima rotas
+   request.customer = customer;
+
    return next();
 }
 
@@ -56,7 +59,13 @@ app.post('/account', (request, response) => {
 
 //Buscar o extrato bancário do cliente - como precisa buscar a informação completa(todos os dados) precisa usar o find() - O some() é quando precisa retornar existe e não existe.
 
+//usar dessa forma quando eu quiser que todas as minhas rotas tenha acesso ao middleware
+//app.use(verifyIfExistsAccountCPF);
+
 app.get('/statement/', verifyIfExistsAccountCPF, (request, response) => {
+   //recuperando informações do cliente - request.customers desse middleware
+   const { customer } = request;
+
    return response.json(customer.statement);
 });
 
